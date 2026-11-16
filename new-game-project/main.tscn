@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://cqow47bch5ocs"]
+
+[ext_resource type="Script" uid="uid://crtdv5djku0ij" path="res://main.gd" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://dthbwmfw8u6yq" path="res://orc.gd" id="2_h2yge"]
+
+[node name="Main" type="Node2D" unique_id=1962526697]
+script = ExtResource("1_0xm2m")
+
+[node name="Orc" type="Node2D" parent="." unique_id=1963654932]
+script = ExtResource("2_h2yge")
