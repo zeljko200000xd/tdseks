@@ -2,9 +2,72 @@
 
 [ext_resource type="Script" uid="uid://crtdv5djku0ij" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://dthbwmfw8u6yq" path="res://orc.gd" id="2_h2yge"]
+[ext_resource type="Texture2D" uid="uid://dyqlx4yblorgd" path="res://ok.png" id="3_h2yge"]
+[ext_resource type="Texture2D" uid="uid://vdrhgu7ov8" path="res://ork.jpg" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://dly1elnl5t6qj" path="res://archer_tower.gd" id="5_lquwl"]
+[ext_resource type="PackedScene" uid="uid://bek4t2xq0l5am" path="res://arrow.tscn" id="6_7mycd"]
+
+[sub_resource type="Curve2D" id="Curve2D_0xm2m"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 5, 353, 0, 0, 0, 0, 109, 353, 0, 0, 0, 0, 224, 349, 0, 0, 0, 0, 315, 354, 0, 0, 0, 0, 430, 351, 0, 0, 0, 0, 536, 353, 0, 0, 0, 0, 633, 350, 0, 0, 0, 0, 705, 352, 0, 0, 0, 0, 809, 350, 0, 0, 0, 0, 923, 348, 0, 0, 0, 0, 1014, 348, 0, 0, 0, 0, 1068, 351, 0, 0, 0, 0, 1096, 354, 0, 0, 0, 0, 1090, 600, 0, 0, 0, 0, 217, 603, 0, 0, 0, 0, 226, 135, 0, 0, 0, 0, 287, 104, 0, 0, 0, 0, 1088, 102, 0, 0, 0, 0, 1095, 367, 0, 0, 0, 0, 1185, 358)
+}
+point_count = 20
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n3gf7"]
+radius = 20.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hxgwb"]
+radius = 200.0
 
 [node name="Main" type="Node2D" unique_id=1962526697]
+position = Vector2(-1, 1)
 script = ExtResource("1_0xm2m")
 
-[node name="Orc" type="Node2D" parent="." unique_id=1963654932]
+[node name="Ok" type="Sprite2D" parent="." unique_id=1546130670]
+position = Vector2(644, 364)
+texture = ExtResource("3_h2yge")
+
+[node name="Path2D" type="Path2D" parent="." unique_id=753357416]
+curve = SubResource("Curve2D_0xm2m")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D" unique_id=912736046]
+position = Vector2(5, 353)
+rotates = false
+
+[node name="Orc" type="Node2D" parent="Path2D/PathFollow2D" unique_id=1963654932]
+position = Vector2(26, 0)
 script = ExtResource("2_h2yge")
+
+[node name="Sprite2D" type="Sprite2D" parent="Path2D/PathFollow2D/Orc" unique_id=892778516]
+position = Vector2(-26.00003, -1.9999695)
+scale = Vector2(0.062265165, 0.07375382)
+texture = ExtResource("4_1bvp3")
+
+[node name="Hurtbox" type="Area2D" parent="Path2D/PathFollow2D/Orc" unique_id=1895445359]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/Orc/Hurtbox" unique_id=1028926583]
+shape = SubResource("CircleShape2D_n3gf7")
+
+[node name="HealthBar" type="ProgressBar" parent="Path2D/PathFollow2D/Orc" unique_id=230012681]
+offset_right = 4.0
+offset_bottom = 27.0
+offset_transform_enabled = true
+offset_transform_position = Vector2(-25, -35)
+offset_transform_scale = Vector2(2, 2)
+value = 100.0
+
+[node name="ArcherTower" type="Node2D" parent="." unique_id=1919290535]
+script = ExtResource("5_lquwl")
+arrow_scene = ExtResource("6_7mycd")
+
+[node name="Sprite2D" type="Sprite2D" parent="ArcherTower" unique_id=233293747]
+
+[node name="Area2D" type="Area2D" parent="ArcherTower/Sprite2D" unique_id=315328355]
+position = Vector2(340, 245)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ArcherTower/Sprite2D/Area2D" unique_id=184368034]
+position = Vector2(120, 51)
+shape = SubResource("CircleShape2D_hxgwb")
+
+[connection signal="area_entered" from="ArcherTower/Sprite2D/Area2D" to="ArcherTower" method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="ArcherTower/Sprite2D/Area2D" to="ArcherTower" method="_on_area_2d_area_exited"]

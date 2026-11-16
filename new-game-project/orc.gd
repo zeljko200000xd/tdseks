@@ -1,39 +1,43 @@
 extends Node2D
 
-var speed = 100.0
-var health = 100
+@export var speed: float = 100.0
+@export var max_health: int = 100
+@onready var health_bar = $HealthBar
 
-var path_points = [
-	Vector2(20, 220),
-	Vector2(340, 220),
-	Vector2(340, 500),
-	Vector2(700, 500),
-	Vector2(700, 180),
-	Vector2(1060, 180),
-	Vector2(1060, 580),
-	Vector2(1280, 580)
-]
+var health: int
+var path_follow: PathFollow2D
 
-var current_point = 1
+
+func _ready():
+	
+	health = max_health
+	add_to_group("enemies")
+	health_bar.max_value = max_health
+	health_bar.value = health
+	path_follow = get_parent() as PathFollow2D
+
 
 func _process(delta):
-	if current_point >= path_points.size():
-		queue_free()
+	if path_follow == null:
 		return
 
-	var target = path_points[current_point]
-	var direction = global_position.direction_to(target)
+	path_follow.progress += speed * delta
 
-	global_position += direction * speed * delta
+	if path_follow.progress_ratio >= 1.0:
+		queue_free()
 
-	if global_position.distance_to(target) < 5:
-		global_position = target
-		current_point += 1
 
-	queue_redraw()
+func take_damage(amount: int):
+	health -= amount
+	health = max(health, 0)
+	health_bar.value = health
 
-func _draw():
-	draw_circle(Vector2.ZERO, 15, Color("#287d32"))
-	draw_circle(Vector2(-5, -4), 3, Color.WHITE)
-	draw_circle(Vector2(5, -4), 3, Color.WHITE)
-	draw_rect(Rect2(-10, 12, 20, 5), Color("#542b20"))
+	print("Orc HP: ", health)
+
+	if health <= 0:
+		die()
+
+
+func die():
+	print("Orc je poražen!")
+	queue_free()

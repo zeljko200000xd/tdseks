@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bek4t2xq0l5am"]
+
+[ext_resource type="Script" uid="uid://dom6x6o4q5rkd" path="res://arrow.gd" id="1_2ndhl"]
+[ext_resource type="Texture2D" uid="uid://nybbyuajkjmq" path="res://JecjrCtnlv0n0PQNE2g9bPjX1JleMi4_LQBBdOZpsy3FJEqPvPfuHwvDQXDL8rLH9siH3aWRjH_XuKgonZcMGWTyPRMVZ82xdXWbyOA-tMVnQKM9mnYJPOT-BvW1a2sYC8akaBQZqG5dkezoARS5al0OpglzyXH2LfcGnhbDva0.jpg" id="2_acd0x"]
+
+[node name="Arrow" type="Area2D" unique_id=2036992491]
+visible = false
+script = ExtResource("1_2ndhl")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=612198416]
+texture = ExtResource("2_acd0x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=722865089]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
