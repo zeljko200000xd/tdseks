@@ -4,7 +4,7 @@ extends Area2D
 @export var speed: float = 400.0
 
 var target: Node2D
-var damage: int = 100
+var damage: int = 10
 
 
 func set_target(new_target: Node2D, new_damage: int):
@@ -23,11 +23,18 @@ func _process(delta):
 	rotation = direction.angle()
 
 
+
 func _on_area_entered(area: Area2D):
+	print("STRELA JE DETEKTOVALA: ", area.name)
+
 	if not is_instance_valid(target):
 		queue_free()
 		return
 
-	if area.name == "Hurtbox" and area.get_parent() == target:
-		target.take_damage(damage)
-		queue_free()
+	if area.name == "Hurtbox":
+		var enemy = area.get_parent()
+
+		if enemy == target:
+			print("POGODAK! SKIDAM 10 HP")
+			enemy.take_damage(damage)
+			queue_free()

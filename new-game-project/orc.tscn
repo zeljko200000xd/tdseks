@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://bpdwwfbeu8vcg"]
+
+[ext_resource type="Script" uid="uid://dthbwmfw8u6yq" path="res://orc.gd" id="1_3xw0u"]
+[ext_resource type="Texture2D" uid="uid://vdrhgu7ov8" path="res://ork.jpg" id="2_kapy6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n3gf7"]
+radius = 20.0
+
+[node name="Orc" type="Node2D" unique_id=905952613]
+script = ExtResource("1_3xw0u")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=402124447]
+position = Vector2(-26.00003, -1.9999695)
+scale = Vector2(0.062265165, 0.07375382)
+texture = ExtResource("2_kapy6")
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=395580106]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1564013406]
+shape = SubResource("CircleShape2D_n3gf7")
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=1475720651]
+offset_right = 4.0
+offset_bottom = 27.0
+offset_transform_enabled = true
+offset_transform_position = Vector2(-25, -35)
+offset_transform_scale = Vector2(2, 2)
+value = 100.0
